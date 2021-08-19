@@ -55,6 +55,7 @@
 
 <script>
 import { mapGetters } from "vuex";
+import querystring from "query-string";
 export default {
   components: {},
   metaInfo: {
@@ -66,18 +67,28 @@ export default {
       password: "@Nanonino2021",
       user: "",
       verifiedStatus: "",
+      qs: ""
     };
   },
   computed: {
     ...mapGetters(["getAlerts", "fullPageLoading"]),
   },
-  mounted() {},
+  mounted() {
+    this.qs = querystring.parse(window.location?.search);
+    window.addEventListener("beforeunload", this.beforeClose);
+  },
   methods: {
+    beforeClose(){
+      this.verifiedStatus = "";
+      this.popupCallback();
+    },
     popupCallback() {
-      window.opener.popupCallback({
-        message: this.verifiedStatus,
-        status: this.verifiedStatus.toLowerCase(),
-      });
+      console.log("popupcallback");
+      const verificationStatus = this.verifiedStatus || "Not-Started";
+      window.opener.postMessage(JSON.stringify({
+        message: verificationStatus,
+        status: verificationStatus.toLowerCase(),
+      }), this.qs?.origin);
     },
     closeWindow() {
       window.close();
