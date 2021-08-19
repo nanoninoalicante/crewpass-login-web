@@ -12,7 +12,7 @@
               </v-row>
             </v-card-text>
             <v-card-actions>
-              <v-btn elevation="0" rounded color="primary"
+              <v-btn elevation="0" rounded color="primary" @click="closeWindow"
                 >Go back to Agency</v-btn
               >
             </v-card-actions>
@@ -73,6 +73,15 @@ export default {
   },
   mounted() {},
   methods: {
+    popupCallback() {
+      window.opener.popupCallback({
+        message: this.verifiedStatus,
+        status: this.verifiedStatus.toLowerCase(),
+      });
+    },
+    closeWindow() {
+      window.close();
+    },
     login() {
       this.$store.commit("loading", true);
       window.firebase
@@ -90,6 +99,7 @@ export default {
           console.log("user: ", user);
           this.user = user;
           this.verifiedStatus = "Verified";
+          this.popupCallback();
         })
         .catch((error) => {
           console.log("error: ", error);
