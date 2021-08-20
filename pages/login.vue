@@ -74,17 +74,18 @@ export default {
     ...mapGetters(["getAlerts", "fullPageLoading"]),
   },
   mounted() {
+    // GET QUERY STRING DATA FROM URL
     this.qs = querystring.parse(window.location?.search);
+    // LISTEN FOR WINDOW CLOSE TO MAKE SURE A STATUS of "CLOSED" is returned
     window.addEventListener("beforeunload", this.beforeClose);
   },
   methods: {
     beforeClose(){
-      this.verifiedStatus = "";
       this.popupCallback();
     },
     popupCallback() {
       console.log("popupcallback");
-      const verificationStatus = this.verifiedStatus || "Not-Started";
+      const verificationStatus = this.verifiedStatus || "Closed";
       window.opener.postMessage(JSON.stringify({
         message: verificationStatus,
         status: verificationStatus.toLowerCase(),
@@ -107,8 +108,8 @@ export default {
           // Signed in
           this.$store.commit("loading", false);
           const user = userCredential.user;
-          console.log("user: ", user);
           this.user = user;
+          // TO SIMULATE GETTING BACKGROUND CHECK STATUS
           this.verifiedStatus = "Verified";
           this.popupCallback();
         })
