@@ -94,7 +94,7 @@ export default {
         subscriptionStatus: "subscribed",
         user: {
           email: this.email,
-          name: this.name
+          name: this.name,
           userId: this.userId
         }
       }), this.qs?.origin);
