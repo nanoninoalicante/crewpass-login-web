@@ -68,7 +68,8 @@ export default {
       name: "Christopher Hill",
       user: "",
       verifiedStatus: "",
-      qs: ""
+      qs: "",
+      userId: "userid-12312"
     };
   },
   computed: {
@@ -94,6 +95,7 @@ export default {
         user: {
           email: this.email,
           name: this.name
+          userId: this.userId
         }
       }), this.qs?.origin);
     },
