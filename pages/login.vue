@@ -65,6 +65,7 @@ export default {
     return {
       email: "christopher+crew12@nanonino.com",
       password: "@Nanonino2021",
+      name: "Christopher Hill",
       user: "",
       verifiedStatus: "",
       qs: ""
@@ -89,6 +90,11 @@ export default {
       window.opener.postMessage(JSON.stringify({
         message: verificationStatus,
         status: verificationStatus.toLowerCase(),
+        subscriptionStatus: "subscribed",
+        user: {
+          email: this.email,
+          name: this.name
+        }
       }), this.qs?.origin);
     },
     closeWindow() {
@@ -107,8 +113,8 @@ export default {
         .then((userCredential) => {
           // Signed in
           this.$store.commit("loading", false);
-          const user = userCredential.user;
-          this.user = user;
+          this.user = userCredential.user;
+          console.log("user: ", this.user);
           // TO SIMULATE GETTING BACKGROUND CHECK STATUS
           this.verifiedStatus = "Verified";
           this.popupCallback();
