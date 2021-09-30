@@ -29,5 +29,13 @@ export default {
   },
   setBranchId(state, branchId) {
     state.branchId = branchId;
-  }
+  },
+  setHashKey(state, hashKey) {
+    state.hashKey = hashKey;
+  },
+  setDeviceData(state, deviceData) {
+    window.localStorage.setItem("deviceData", JSON.stringify(deviceData));
+    state.ip = deviceData.ipAddress;
+    state.countryCode = deviceData.countryCode;
+  },
 };

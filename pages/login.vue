@@ -56,6 +56,7 @@
 <script>
 import { mapGetters } from "vuex";
 import querystring from "query-string";
+import * as CryptoJS from "crypto-js";
 export default {
   components: {},
   metaInfo: {
@@ -73,7 +74,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["getAlerts", "fullPageLoading"]),
+    ...mapGetters(["getAlerts", "fullPageLoading", "hashKey"]),
   },
   mounted() {
     // GET QUERY STRING DATA FROM URL
@@ -82,22 +83,25 @@ export default {
     window.addEventListener("beforeunload", this.beforeClose);
   },
   methods: {
-    beforeClose(){
+    beforeClose() {
       this.popupCallback();
     },
     popupCallback() {
       console.log("popupcallback");
       const verificationStatus = this.verifiedStatus || "Closed";
-      window.opener.postMessage(JSON.stringify({
-        message: verificationStatus,
-        status: verificationStatus.toLowerCase(),
-        subscriptionStatus: "subscribed",
-        user: {
-          email: this.email,
-          name: this.name,
-          userId: this.userId
-        }
-      }), this.qs?.origin);
+      window.opener.postMessage(
+        JSON.stringify({
+          message: verificationStatus,
+          status: verificationStatus.toLowerCase(),
+          subscriptionStatus: "subscribed",
+          user: {
+            email: this.email,
+            name: this.name,
+            userId: this.userId,
+          },
+        }),
+        this.qs?.origin
+      );
     },
     closeWindow() {
       window.close();
@@ -108,9 +112,13 @@ export default {
         .auth()
         .setPersistence(window.firebase.auth.Auth.Persistence.SESSION)
         .then(() => {
+          const hashedPassword = CryptoJS.HmacSHA1(
+            this.password,
+            this.hashKey
+          ).toString();
           return window.firebase
             .auth()
-            .signInWithEmailAndPassword(this.email, this.password);
+            .signInWithEmailAndPassword(this.email, hashedPassword);
         })
         .then((userCredential) => {
           // Signed in

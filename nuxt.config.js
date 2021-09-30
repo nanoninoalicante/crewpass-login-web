@@ -1,11 +1,20 @@
 import colors from "vuetify/es5/util/colors";
-
+import { config } from "dotenv";
+config();
 export default {
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
   ssr: false,
 
   // Target: https://go.nuxtjs.dev/config-target
   target: "static",
+  publicRuntimeConfig: {
+    env: process.env.ENVIRONMENT,
+    projectId: process.env.PROJECT_ID || "demo-web",
+    commitId: process.env.COMMIT_ID || "commitid",
+    branchName: process.env.BRANCH_NAME || "branchname",
+    hashKey: process.env.HASH_KEY || "",
+    version: process.env.VERSION || "mar2021",
+  },
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
@@ -27,7 +36,10 @@ export default {
   css: [],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [{ src: "~/plugins/firebase.js", mode: "client" }],
+  plugins: [
+    { src: "~/plugins/firebase.js", mode: "client" },
+    { src: "~/plugins/axios.js", mode: "client" },
+  ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -41,7 +53,7 @@ export default {
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
-  modules: [],
+  modules: ["@nuxtjs/axios"],
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
   vuetify: {

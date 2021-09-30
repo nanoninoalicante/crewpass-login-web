@@ -13,6 +13,7 @@ export default () => ({
   currentPlayback: "",
   uploadFields: "",
   uploadUrl: "",
-  audiosApiBaseUrl: "",
+  hashKey: "",
+  ip: "",
   uploadFiles: []
 });

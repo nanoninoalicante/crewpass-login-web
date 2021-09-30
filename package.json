@@ -14,12 +14,16 @@
     "test:e2e": "cross-env TEST=e2e ava ./test/e2e/**/*"
   },
   "dependencies": {
+    "@nuxtjs/axios": "^5.13.6",
     "axios": "^0.21.1",
     "core-js": "^3.15.1",
+    "crypto-js": "^4.1.1",
+    "dotenv": "^10.0.0",
     "firebase": "^8.9.1",
     "ksuid": "^2.0.0",
     "nuxt": "^2.15.7",
     "query-string": "^7.0.1",
+    "simple-parse-json": "^1.1.0",
     "vuetify": "^2.5.5",
     "vuex": "^3.6.2"
   },

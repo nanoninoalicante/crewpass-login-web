@@ -37,25 +37,6 @@ export default {
   },
   data() {
     return {
-      clipped: false,
-      drawer: false,
-      fixed: false,
-      items: [
-        {
-          icon: "mdi-apps",
-          title: "Welcome",
-          to: "/",
-        },
-        {
-          icon: "mdi-chart-bubble",
-          title: "Inspire",
-          to: "/inspire",
-        },
-      ],
-      miniVariant: false,
-      right: true,
-      rightDrawer: false,
-      title: "Vuetify.js",
     };
   },
   computed: {
@@ -63,6 +44,18 @@ export default {
   },
   mounted() {
     this.$store.commit("loading", false);
+    this.$store.dispatch("getIp");
+  },
+  beforeCreate() {
+    console.log("env: ", this.$config.env);
+    console.log("commitId: ", this.$config.commitId);
+    console.log("branchName: ", this.$config.branchName);
+    this.$store.commit("setCommitId", this.$config.commitId || "commitId");
+    this.$store.commit("setBranchId", this.$config.branchName || "branchName");
+    this.$store.commit("setHashKey", this.$config.hashKey || "");
+    this.$store.dispatch("setEnvironment", this.$config.env || "dev");
+    // this.$store.dispatch("setVersion", this.$config.version || "mar2021");
+    this.$store.dispatch("setRegionAndLanguage", "en-en");
   },
   methods: {
     closeAlert(alert) {
