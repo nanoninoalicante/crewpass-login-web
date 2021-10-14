@@ -64,13 +64,13 @@ export default {
   },
   data() {
     return {
-      email: "christopher+crew12@nanonino.com",
-      password: "@Nanonino2021",
-      name: "Christopher Hill",
+      email: "",
+      password: "",
+      name: "",
       user: "",
       verifiedStatus: "",
       qs: "",
-      userId: "userid-12312"
+      userId: ""
     };
   },
   computed: {
@@ -108,15 +108,15 @@ export default {
     },
     login() {
       this.$store.commit("loading", true);
-      window.firebase
+      this.$firebase
         .auth()
-        .setPersistence(window.firebase.auth.Auth.Persistence.SESSION)
+        .setPersistence(this.$firebase.auth.Auth.Persistence.SESSION)
         .then(() => {
           const hashedPassword = CryptoJS.HmacSHA1(
             this.password,
             this.hashKey
           ).toString();
-          return window.firebase
+          return this.$firebase
             .auth()
             .signInWithEmailAndPassword(this.email, hashedPassword);
         })

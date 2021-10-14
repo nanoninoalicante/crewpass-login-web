@@ -10,5 +10,8 @@ export default {
   pageTitle: (state) => `Urlo Demo - ${state.environment || "dev"}`,
   language: (state) => state.language || "en",
   region: (state) => state.region || "es",
-  hashKey: (state) => state.hashKey || ""
+  hashKey: (state) => state.hashKey || "",
+  primaryApiKey: (state) => state.primaryApiKey || "",
+  primaryApiHashKey: (state) => state.primaryApiHashKey || "",
+  primaryApiBaseUrl: (state) => state.primaryApiBaseUrl || "",
 };

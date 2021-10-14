@@ -13,6 +13,9 @@ export default {
     commitId: process.env.COMMIT_ID || "commitid",
     branchName: process.env.BRANCH_NAME || "branchname",
     hashKey: process.env.HASH_KEY || "",
+    primaryApiBaseUrl: process.env.PRIMARY_API_BASEURL || "",
+    primaryApiHashKey: process.env.PRIMARY_API_HASH_KEY || "",
+    primaryApiKey: process.env.PRIMARY_API_KEY || "",
     version: process.env.VERSION || "mar2021",
   },
 

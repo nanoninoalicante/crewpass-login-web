@@ -53,6 +53,9 @@ export default {
     this.$store.commit("setCommitId", this.$config.commitId || "commitId");
     this.$store.commit("setBranchId", this.$config.branchName || "branchName");
     this.$store.commit("setHashKey", this.$config.hashKey || "");
+    this.$store.commit("setPrimaryApiKey", this.$config.primaryApiKey || "");
+    this.$store.commit("setPrimaryApiHashKey", this.$config.primaryApiHashKey || "");
+    this.$store.commit("setPrimaryApiBaseUrl", this.$config.primaryApiBaseUrl || "");
     this.$store.dispatch("setEnvironment", this.$config.env || "dev");
     // this.$store.dispatch("setVersion", this.$config.version || "mar2021");
     this.$store.dispatch("setRegionAndLanguage", "en-en");

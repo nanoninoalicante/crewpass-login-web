@@ -14,6 +14,9 @@ export default () => ({
   uploadFields: "",
   uploadUrl: "",
   hashKey: "",
+  primaryApiHashKey: "",
+  primaryApiKey: "",
+  primaryApiBaseUrl: "",
   ip: "",
   uploadFiles: []
 });
