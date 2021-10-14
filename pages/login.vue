@@ -126,7 +126,7 @@ export default {
           this.user = userCredential.user;
           console.log("user: ", this.user);
           // TO SIMULATE GETTING BACKGROUND CHECK STATUS
-          this.verifiedStatus = "Verified";
+          this.verifiedStatus = "Pending";
           this.popupCallback();
         })
         .catch((error) => {
