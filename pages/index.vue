@@ -69,8 +69,8 @@ export default {
   },
   data() {
     return {
-      email: "christopher+fa1@nanonino.com",
-      password: "nanonino",
+      email: "",
+      password: "",
       name: "",
       user: "",
       verifiedStatus: "",
