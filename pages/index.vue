@@ -36,10 +36,15 @@
                       label="Password"
                       placeholder="Password"
                       outlined
+                      @keyup.enter="login"
                     ></v-text-field>
                   </v-col>
                   <v-col cols="12">
-                    <v-btn elevation="0" rounded color="primary" @click="login"
+                    <v-btn
+                      elevation="0"
+                      rounded
+                      color="primary"
+                      @click.stop="login"
                       >Login</v-btn
                     >
                   </v-col>
@@ -64,13 +69,13 @@ export default {
   },
   data() {
     return {
-      email: "",
-      password: "",
+      email: "christopher+fa1@nanonino.com",
+      password: "nanonino",
       name: "",
       user: "",
       verifiedStatus: "",
       qs: "",
-      userId: ""
+      userId: "",
     };
   },
   computed: {
@@ -120,11 +125,18 @@ export default {
             .auth()
             .signInWithEmailAndPassword(this.email, hashedPassword);
         })
-        .then((userCredential) => {
+        .then(async (userCredential) => {
           // Signed in
           this.$store.commit("loading", false);
+          console.log("user creds: ", userCredential);
           this.user = userCredential.user;
           console.log("user: ", this.user);
+          const token = await this.$firebase
+            .auth()
+            .currentUser.getIdToken(false);
+          await this.$store.dispatch("login", token).catch((e) => {
+            console.log("error from api login: ", e.message);
+          });
           // TO SIMULATE GETTING BACKGROUND CHECK STATUS
           this.verifiedStatus = "Pending";
           this.popupCallback();

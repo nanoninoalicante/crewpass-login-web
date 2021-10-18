@@ -33,16 +33,10 @@ export default {
   setHashKey(state, hashKey) {
     state.hashKey = hashKey;
   },
-  setPrimaryApiBaseUrl(state, primaryApiBaseUrl) {
-    state.primaryApiBaseUrl = primaryApiBaseUrl;
-  },
-  setPrimaryApiKey(state, primaryApiKey) {
-    state.primaryApiKey = primaryApiKey;
-  },
-  setPrimaryApiHashKey(state, primaryApiHashKey) {
-    state.primaryApiHashKey = primaryApiHashKey;
-  },
   setDeviceData(state, deviceData) {
+    if (!deviceData) {
+      return null;
+    }
     window.localStorage.setItem("deviceData", JSON.stringify(deviceData));
     state.ip = deviceData.ipAddress;
     state.countryCode = deviceData.countryCode;

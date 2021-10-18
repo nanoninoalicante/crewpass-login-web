@@ -11,7 +11,5 @@ export default {
   language: (state) => state.language || "en",
   region: (state) => state.region || "es",
   hashKey: (state) => state.hashKey || "",
-  primaryApiKey: (state) => state.primaryApiKey || "",
-  primaryApiHashKey: (state) => state.primaryApiHashKey || "",
-  primaryApiBaseUrl: (state) => state.primaryApiBaseUrl || "",
+  getIp: (state) => state.ip || "",
 };

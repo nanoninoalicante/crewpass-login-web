@@ -16,6 +16,8 @@ export default {
     primaryApiBaseUrl: process.env.PRIMARY_API_BASEURL || "",
     primaryApiHashKey: process.env.PRIMARY_API_HASH_KEY || "",
     primaryApiKey: process.env.PRIMARY_API_KEY || "",
+    firebaseApiKey: process.env.FIREBASE_API_KEY || "",
+    firebaseAuthDomain: process.env.FIREBASE_AUTH_DOMAIN || "",
     version: process.env.VERSION || "mar2021",
   },
 

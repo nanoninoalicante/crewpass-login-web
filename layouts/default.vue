@@ -1,7 +1,7 @@
 <template>
   <v-app light>
     <FullPageLoader :loading="fullPageLoading" />
-<!--    <v-app-bar fixed app> </v-app-bar>-->
+    <!--    <v-app-bar fixed app> </v-app-bar>-->
     <v-main>
       <v-container fluid class="pt-10">
         <Nuxt />
@@ -36,15 +36,15 @@ export default {
     FullPageLoader,
   },
   data() {
-    return {
-    };
+    return {};
   },
   computed: {
     ...mapGetters(["getAlerts", "fullPageLoading", "commitId", "branchId"]),
   },
   mounted() {
-    this.$store.commit("loading", false);
-    this.$store.dispatch("getIp");
+    this.startSession().then((r) => {
+      console.log("session started");
+    });
   },
   beforeCreate() {
     console.log("env: ", this.$config.env);
@@ -53,9 +53,6 @@ export default {
     this.$store.commit("setCommitId", this.$config.commitId || "commitId");
     this.$store.commit("setBranchId", this.$config.branchName || "branchName");
     this.$store.commit("setHashKey", this.$config.hashKey || "");
-    this.$store.commit("setPrimaryApiKey", this.$config.primaryApiKey || "");
-    this.$store.commit("setPrimaryApiHashKey", this.$config.primaryApiHashKey || "");
-    this.$store.commit("setPrimaryApiBaseUrl", this.$config.primaryApiBaseUrl || "");
     this.$store.dispatch("setEnvironment", this.$config.env || "dev");
     // this.$store.dispatch("setVersion", this.$config.version || "mar2021");
     this.$store.dispatch("setRegionAndLanguage", "en-en");
@@ -68,6 +65,11 @@ export default {
         window.location.reload();
       }
     },
-  }
+    async startSession() {
+      await this.$store.commit("loading", false);
+      const deviceData = await this.$store.dispatch("getIp");
+      return await this.$store.dispatch("registerDevice", deviceData);
+    },
+  },
 };
 </script>
