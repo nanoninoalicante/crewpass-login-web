@@ -6,36 +6,47 @@
           <v-card v-show="verifiedStatus" flat class="pa-5 ma-4 rounded-xl">
             <v-card-text>
               <v-row>
-                <v-col cols="12">
-                  <h1 class="text-h5">{{ verifiedStatus }}</h1>
+                <v-col cols="12" class='py-10 my-8'>
+                  <div id="cp-login-wrapper">
+                    <div id="cp-login" :class="['cp-button-image', 'background-repeat', verifiedStatus]" style='cursor: default'></div>
+                  </div>
                 </v-col>
               </v-row>
             </v-card-text>
             <v-card-actions>
-              <v-btn elevation="0" rounded color="primary" @click="closeWindow"
+              <v-btn
+                elevation="0"
+                rounded
+                x-large
+                color="primary"
+                @click="closeWindow"
                 >Go back to Agency</v-btn
               >
             </v-card-actions>
           </v-card>
           <v-card v-show="!verifiedStatus" flat class="pa-5 ma-4 rounded-xl">
-            <v-card-title class="text-h4">Login</v-card-title>
+            <v-card-title class="text-h6 text-sm-center"
+              >Approve with CrewPass</v-card-title
+            >
             <v-card-text>
               <v-input>
-                <v-row>
+                <v-row no-gutters>
                   <v-col cols="12">
                     <v-text-field
                       v-model="email"
-                      label="Email"
-                      placeholder="Email"
-                      outlined
+                      label="Your Email"
+                      placeholder="Your Email"
+                      filled
+                      dense
                     ></v-text-field>
                   </v-col>
                   <v-col cols="12">
                     <v-text-field
                       v-model="password"
-                      label="Password"
-                      placeholder="Password"
-                      outlined
+                      label="Your Password"
+                      placeholder="Your Password"
+                      filled
+                      dense
                       @keyup.enter="login"
                     ></v-text-field>
                   </v-col>
@@ -43,6 +54,7 @@
                     <v-btn
                       elevation="0"
                       rounded
+                      x-large
                       color="primary"
                       @click.stop="login"
                       >Login</v-btn
@@ -154,3 +166,7 @@ export default {
   },
 };
 </script>
+<style lang='sass'>
+.background-repeat
+  background-repeat: repeat-y
+</style>

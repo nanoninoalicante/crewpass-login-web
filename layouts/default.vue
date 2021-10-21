@@ -1,9 +1,15 @@
 <template>
-  <v-app light>
+  <v-app light style="background-image: url('login_backgrounds.png')">
     <FullPageLoader :loading="fullPageLoading" />
-    <!--    <v-app-bar fixed app> </v-app-bar>-->
     <v-main>
       <v-container fluid class="pt-10">
+        <v-container fluid class="pt-2">
+          <v-row align="center">
+            <v-col cols="12" align="center">
+              <v-img src="CP_white.png" width="115px" height="auto"></v-img>
+            </v-col>
+          </v-row>
+        </v-container>
         <Nuxt />
       </v-container>
     </v-main>
