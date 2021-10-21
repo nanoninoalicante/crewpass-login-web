@@ -8,7 +8,7 @@
               <v-row>
                 <v-col cols="12" class='py-10 my-8'>
                   <div id="cp-login-wrapper">
-                    <div id="cp-login" :class="['cp-button-image', 'background-repeat', verifiedStatus]" style='cursor: default'></div>
+                    <div id="cp-login" :class="['cp-button-image', 'background-repeat', verifiedStatusId]" style='cursor: default'></div>
                   </div>
                 </v-col>
               </v-row>
@@ -92,6 +92,10 @@ export default {
   },
   computed: {
     ...mapGetters(["getAlerts", "fullPageLoading", "hashKey"]),
+    verifiedStatusId(){
+      if(!this.verifiedStatus) return "";
+      return this.verifiedStatus.toLowerCase();
+    }
   },
   mounted() {
     // GET QUERY STRING DATA FROM URL
