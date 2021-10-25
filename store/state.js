@@ -1,6 +1,7 @@
 export default () => ({
   alerts: [],
   fullPageLoading: true,
+  session: "",
   language: "en",
   region: "es",
   environment: "",

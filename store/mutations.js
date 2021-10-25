@@ -12,6 +12,9 @@ export default {
   loading(state, l) {
     state.fullPageLoading = l;
   },
+  setSession(state, session) {
+    state.session = session;
+  },
   setEnvironment(state, environment) {
     state.environment = environment;
   },

@@ -24,6 +24,7 @@
     "nuxt": "^2.15.7",
     "query-string": "^7.0.1",
     "simple-parse-json": "^1.1.0",
+    "uuid": "^8.3.2",
     "vuetify": "^2.5.5",
     "vuex": "^3.6.2"
   },

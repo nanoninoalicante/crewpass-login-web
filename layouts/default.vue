@@ -64,6 +64,21 @@ export default {
     this.$store.dispatch("setRegionAndLanguage", "en-en");
   },
   methods: {
+    checkUser() {
+      this.$firebase.auth().onAuthStateChanged((user) => {
+        console.log("location: ", this.$route);
+        if (!user) {
+          console.log("user is not signed in");
+          return;
+        }
+        // User is signed in, see docs for a list of available properties
+        // https://firebase.google.com/docs/reference/js/firebase.User
+        user.getIdTokenResult(true).then((u) => {
+          console.log("token: ", u.token);
+        });
+        // ...
+      });
+    },
     closeAlert(alert) {
       console.log("close alert: ", alert);
       this.$store.commit("closeAlert", alert);
@@ -72,6 +87,7 @@ export default {
       }
     },
     async startSession() {
+      await this.$store.dispatch("setSession");
       await this.$store.commit("loading", false);
       const deviceData = await this.$store.dispatch("getIp");
       return await this.$store.dispatch("registerDevice", deviceData);

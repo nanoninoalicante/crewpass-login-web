@@ -6,9 +6,17 @@
           <v-card v-show="verifiedStatus" flat class="pa-5 ma-4 rounded-xl">
             <v-card-text>
               <v-row>
-                <v-col cols="12" class='py-10 my-8'>
+                <v-col cols="12" class="py-10 my-8">
                   <div id="cp-login-wrapper">
-                    <div id="cp-login" :class="['cp-button-image', 'background-repeat', verifiedStatusId]" style='cursor: default'></div>
+                    <div
+                      id="cp-login"
+                      :class="['background-repeat']"
+                      :style="
+                        'background-image: url(' +
+                        loginButtonBackground +
+                        '); width: 330px; height: 41px;'
+                      "
+                    ></div>
                   </div>
                 </v-col>
               </v-row>
@@ -45,6 +53,7 @@
                       v-model="password"
                       label="Your Password"
                       placeholder="Your Password"
+                      type="password"
                       filled
                       dense
                       @keyup.enter="login"
@@ -88,22 +97,49 @@ export default {
       verifiedStatus: "",
       qs: "",
       userId: "",
+      popupPingInterval: "",
+      loginButtonBackgroundBaseUrl:
+        "https://storage.googleapis.com/crewpass-development-loginbutton",
     };
   },
   computed: {
-    ...mapGetters(["getAlerts", "fullPageLoading", "hashKey"]),
-    verifiedStatusId(){
-      if(!this.verifiedStatus) return "";
+    ...mapGetters(["getAlerts", "fullPageLoading", "hashKey", "getSessionId"]),
+    verifiedStatusId() {
+      if (!this.verifiedStatus) return "";
       return this.verifiedStatus.toLowerCase();
-    }
+    },
+    loginButtonBackground() {
+      if (!this.verifiedStatus)
+        return `${this.loginButtonBackgroundBaseUrl}/Start.png`;
+      return `${this.loginButtonBackgroundBaseUrl}/${this.verifiedStatus}.png`;
+    },
   },
   mounted() {
     // GET QUERY STRING DATA FROM URL
     this.qs = querystring.parse(window.location?.search);
+    this.checkUser();
     // LISTEN FOR WINDOW CLOSE TO MAKE SURE A STATUS of "CLOSED" is returned
     window.addEventListener("beforeunload", this.beforeClose);
   },
+  beforeDestroy() {
+    if (this.popupPingInterval) {
+      clearInterval(this.popupPingInterval);
+    }
+  },
   methods: {
+    checkUser() {
+      this.$firebase.auth().onAuthStateChanged((user) => {
+        console.log("location: ", this.$route);
+        if (!user) {
+          console.log("user is not signed in");
+          return;
+        }
+        user.getIdTokenResult(true).then((u) => {
+          console.log("token: ", u.token);
+        });
+        // ...
+      });
+    },
     beforeClose() {
       this.popupCallback();
     },
@@ -126,6 +162,10 @@ export default {
     },
     closeWindow() {
       window.close();
+    },
+    updateStatus(status) {
+      this.verifiedStatus = status;
+      window.localStorage.setItem(this.getSessionId, status);
     },
     login() {
       this.$store.commit("loading", true);
@@ -154,7 +194,7 @@ export default {
             console.log("error from api login: ", e.message);
           });
           // TO SIMULATE GETTING BACKGROUND CHECK STATUS
-          this.verifiedStatus = "Pending";
+          this.updateStatus("Pending");
           this.popupCallback();
         })
         .catch((error) => {
@@ -170,7 +210,7 @@ export default {
   },
 };
 </script>
-<style lang='sass'>
+<style lang="sass">
 .background-repeat
   background-repeat: repeat-y
 </style>

@@ -3,6 +3,7 @@ export default {
     return state.alerts || [];
   },
   fullPageLoading: (state) => state.fullPageLoading,
+  getSessionId: (state) => state.session,
   commitId: (state) =>
     state.commitId ? state.commitId.slice(0, 7) : "commitId",
   branchId: (state) => state.branchId || "branchId",
