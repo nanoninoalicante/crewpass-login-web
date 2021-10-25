@@ -98,12 +98,13 @@ export default {
       qs: "",
       userId: "",
       popupPingInterval: "",
-      loginButtonBackgroundBaseUrl:
-        "https://storage.googleapis.com/crewpass-development-loginbutton",
     };
   },
   computed: {
     ...mapGetters(["getAlerts", "fullPageLoading", "hashKey", "getSessionId"]),
+    loginButtonBackgroundBaseUrl(){
+      return this.$config.loginButtonBackgroundBaseUrl
+    },
     verifiedStatusId() {
       if (!this.verifiedStatus) return "";
       return this.verifiedStatus.toLowerCase();
