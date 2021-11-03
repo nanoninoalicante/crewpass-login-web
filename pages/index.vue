@@ -3,7 +3,7 @@
     <v-container fluid>
       <v-row>
         <v-col>
-          <v-card v-show="verifiedStatus" flat class="pa-5 ma-4 rounded-xl">
+          <v-card v-show="crewStatus" flat class="pa-5 ma-4 rounded-xl">
             <v-card-text>
               <v-row>
                 <v-col cols="12" class="py-10 my-8">
@@ -32,7 +32,7 @@
               >
             </v-card-actions>
           </v-card>
-          <v-card v-show="!verifiedStatus" flat class="pa-5 ma-4 rounded-xl">
+          <v-card v-show="!crewStatus" flat class="pa-5 ma-4 rounded-xl">
             <v-card-title class="text-h6 text-sm-center"
               >Approve with CrewPass</v-card-title
             >
@@ -94,25 +94,34 @@ export default {
       password: "",
       name: "",
       user: "",
-      verifiedStatus: "",
       qs: "",
       userId: "",
       popupPingInterval: "",
     };
   },
   computed: {
-    ...mapGetters(["getAlerts", "fullPageLoading", "hashKey", "getSessionId"]),
-    loginButtonBackgroundBaseUrl(){
-      return this.$config.loginButtonBackgroundBaseUrl
+    ...mapGetters([
+      "getAlerts",
+      "fullPageLoading",
+      "hashKey",
+      "getSessionId",
+      "userEmail",
+      "crewStatus",
+      "userFirstName",
+      "userLastName",
+      "crewUniqueId",
+    ]),
+    loginButtonBackgroundBaseUrl() {
+      return this.$config.loginButtonBackgroundBaseUrl;
     },
-    verifiedStatusId() {
-      if (!this.verifiedStatus) return "";
-      return this.verifiedStatus.toLowerCase();
+    crewStatusId() {
+      if (!this.crewStatus) return "";
+      return this.crewStatus.toLowerCase();
     },
     loginButtonBackground() {
-      if (!this.verifiedStatus)
+      if (!this.crewStatus)
         return `${this.loginButtonBackgroundBaseUrl}/Start.png`;
-      return `${this.loginButtonBackgroundBaseUrl}/${this.verifiedStatus}.png`;
+      return `${this.loginButtonBackgroundBaseUrl}/${this.crewStatus}.png`;
     },
   },
   mounted() {
@@ -146,16 +155,16 @@ export default {
     },
     popupCallback() {
       console.log("popupcallback");
-      const verificationStatus = this.verifiedStatus || "Closed";
+      const verificationStatus = this.crewStatus || "Closed";
       window.opener.postMessage(
         JSON.stringify({
           message: verificationStatus,
           status: verificationStatus.toLowerCase(),
           subscriptionStatus: "subscribed",
           user: {
-            email: this.email,
-            name: this.name,
-            userId: this.userId,
+            email: this.userEmail,
+            name: this.userFirstName + " " + this.userLastName,
+            crewUniqueId: this.crewUniqueId,
           },
         }),
         this.qs?.origin
@@ -163,10 +172,6 @@ export default {
     },
     closeWindow() {
       window.close();
-    },
-    updateStatus(status) {
-      this.verifiedStatus = status;
-      window.localStorage.setItem(this.getSessionId, status);
     },
     login() {
       this.$store.commit("loading", true);
@@ -194,8 +199,6 @@ export default {
           await this.$store.dispatch("login", token).catch((e) => {
             console.log("error from api login: ", e.message);
           });
-          // TO SIMULATE GETTING BACKGROUND CHECK STATUS
-          this.updateStatus("Pending");
           this.popupCallback();
         })
         .catch((error) => {

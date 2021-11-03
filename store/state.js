@@ -8,13 +8,13 @@ export default () => ({
   nonce: "",
   commitId: "",
   branchId: "",
-  posts: [],
-  postId: "",
-  userId: "60dc49762cb6e1000f846580",
-  currentPlayback: "",
-  uploadFields: "",
-  uploadUrl: "",
   hashKey: "",
   ip: "",
-  uploadFiles: []
+  crewStatus: "",
+  userEmail: "",
+  userFirstName: "",
+  userLastName: "",
+  userId: "",
+  crewUniqueId: "",
+  crewVerification: ""
 });

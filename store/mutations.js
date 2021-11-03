@@ -36,6 +36,17 @@ export default {
   setHashKey(state, hashKey) {
     state.hashKey = hashKey;
   },
+  setCrewStatus(state, crewStatus) {
+    state.crewStatus = crewStatus;
+  },
+  setUserData(state, userData) {
+    state.userEmail = userData.email;
+    state.userFirstName = userData.firstName;
+    state.userLastName = userData.lastName;
+    state.userId = userData.userId;
+    state.crewUniqueId = userData.crewUniqueId;
+    state.crewVerification = userData.verification;
+  },
   setDeviceData(state, deviceData) {
     if (!deviceData) {
       return null;
