@@ -24,7 +24,7 @@ export default {
       pending: {
         buttonText: "Pending",
       },
-      approved: {
+      verified: {
         buttonText: "Approved",
       },
       declined: {

@@ -40,12 +40,13 @@ export default {
     state.crewStatus = crewStatus;
   },
   setUserData(state, userData) {
+    console.log("set user data: ", userData);
     state.userEmail = userData.email;
     state.userFirstName = userData.firstName;
     state.userLastName = userData.lastName;
     state.userId = userData.userId;
     state.crewUniqueId = userData.crewUniqueId;
-    state.crewVerification = userData.verification;
+    state.crewVerification = userData.checkStatus;
   },
   setDeviceData(state, deviceData) {
     if (!deviceData) {
