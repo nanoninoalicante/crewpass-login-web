@@ -51,6 +51,7 @@ export default {
   plugins: [
     { src: "~/plugins/firebase.js", mode: "client" },
     { src: "~/plugins/axios.js", mode: "client" },
+    { src: "~/plugins/gtm.js", mode: "client" },
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components

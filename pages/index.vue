@@ -199,6 +199,12 @@ export default {
           await this.$store.dispatch("login", token).catch((e) => {
             console.log("error from api login: ", e.message);
           });
+          this.$gtm.push({
+            event: "agency-verify-login",
+            email: this.user.email,
+            fullName: this.user.fullName,
+            status: this.user.checkStatus,
+          });
           this.popupCallback();
         })
         .catch((error) => {
