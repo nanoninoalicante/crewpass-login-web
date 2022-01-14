@@ -24,8 +24,8 @@ export default {
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    titleTemplate: "Crew Pass",
-    title: "Crew Pass",
+    titleTemplate: "Crew Pass Agency Verify Crew Member",
+    title: "Crew Pass Agency Verify Crew Member",
     htmlAttrs: {
       lang: "en",
     },
