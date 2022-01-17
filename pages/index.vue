@@ -161,6 +161,15 @@ export default {
           message: verificationStatus,
           status: verificationStatus.toLowerCase(),
           subscriptionStatus: "subscribed",
+          formInputData: [
+            { key: "crewpass-email", value: this.userEmail },
+            {
+              key: "crewpass-name",
+              value: this.userFirstName + " " + this.userLastName,
+            },
+            { key: "crewpass-crewUniqueId", value: this.crewUniqueId },
+            { key: "crewpass-status", value: verificationStatus.toLowerCase() },
+          ],
           user: {
             email: this.userEmail,
             name: this.userFirstName + " " + this.userLastName,
