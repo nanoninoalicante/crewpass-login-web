@@ -106,10 +106,14 @@ export default {
     };
     this.$crewpassApi.setHeader("Authorization", token);
     this.$crewpassApi.setHeader("api-hash", apiHash);
-    this.$crewpassApi.post(uri, JSON.stringify(payload)).then((r) => {
-      const userData = r.data?.result?.user;
-      console.log("login: ", userData);
-      commit("setUserData", userData);
-    });
+    return await this.$crewpassApi
+      .post(uri, JSON.stringify(payload))
+      .then((r) => {
+        const userData = r.data?.result?.user;
+        console.log("login: ", userData);
+        commit("setUserData", userData);
+        return userData;
+      })
+      .then(r => r);
   },
 };
