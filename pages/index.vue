@@ -2,7 +2,7 @@
   <v-layout column justify-center align-center>
     <v-container fluid>
       <v-row>
-        <v-col>
+        <v-col cols="12">
           <v-card v-show="crewStatus" flat class="pa-5 ma-4 rounded-xl">
             <v-card-text>
               <v-row>
@@ -33,8 +33,9 @@
             </v-card-actions>
           </v-card>
           <v-card v-show="!crewStatus" flat class="pa-5 ma-4 rounded-xl">
-            <v-card-title class="text-h6 text-sm-center"
-              >Approve with CrewPass</v-card-title
+            <v-card-title
+              class="text-subtitle-1 font-weight-bold text-sm-center"
+              >Please enter your CrewPass details</v-card-title
             >
             <v-card-text>
               <v-input>
@@ -59,20 +60,42 @@
                       @keyup.enter="login"
                     ></v-text-field>
                   </v-col>
-                  <v-col cols="12">
+                  <v-col align="center" cols="12">
                     <v-btn
                       elevation="0"
                       rounded
-                      x-large
+                      large
                       color="primary"
                       @click.stop="login"
-                      >Login</v-btn
+                      >Verify Now</v-btn
                     >
                   </v-col>
                 </v-row></v-input
               >
             </v-card-text>
           </v-card>
+        </v-col>
+        <v-col cols="12">
+          <v-row>
+            <v-col cols="12"
+              ><v-sheet color="transparent" class="px-5 mx-4"
+                ><h1 class="text-subtitle-1 font-weight-bold white--text">
+                  Don't have CrewPass? Get a fully enhanced background check
+                  anywhere in the world from £9.99p/m.
+                </h1>
+              </v-sheet></v-col
+            >
+          </v-row>
+          <v-col align="center" cols="12">
+            <v-btn
+              elevation="0"
+              rounded
+              large
+              color="primary"
+              @click.stop="login"
+              >Sign up</v-btn
+            >
+          </v-col>
         </v-col>
       </v-row>
     </v-container>
@@ -137,6 +160,9 @@ export default {
     }
   },
   methods: {
+    test() {
+      this.popupCallback();
+    },
     checkUser() {
       this.$firebase.auth().onAuthStateChanged((user) => {
         console.log("location: ", this.$route);
@@ -156,19 +182,23 @@ export default {
     popupCallback() {
       console.log("popupcallback");
       const verificationStatus = this.crewStatus || "Closed";
-      window.opener.postMessage(
-        JSON.stringify({
-          message: verificationStatus,
-          status: verificationStatus.toLowerCase(),
-          subscriptionStatus: "subscribed",
-          user: {
-            email: this.userEmail,
-            name: this.userFirstName + " " + this.userLastName,
-            crewUniqueId: this.crewUniqueId,
-          },
-        }),
-        this.qs?.origin
-      );
+      const payload = JSON.stringify({
+        message: verificationStatus,
+        status: verificationStatus.toLowerCase(),
+        subscriptionStatus: "subscribed",
+        user: {
+          email: this.userEmail,
+          name: this.userFirstName + " " + this.userLastName,
+          crewUniqueId: this.crewUniqueId,
+        },
+      });
+      if (window.opener) {
+        console.log("window.opener.postMessage");
+        window.opener.postMessage(payload, this.qs?.origin);
+      } else {
+        console.log("window.postMessage");
+        window.postMessage(payload, this.qs?.origin);
+      }
     },
     closeWindow() {
       window.close();
@@ -221,6 +251,10 @@ export default {
 };
 </script>
 <style lang="sass">
+.v-btn span.v-btn__content
+  text-transform: none
+  letter-spacing: 0
+  font-weight: 600
 .background-repeat
   background-repeat: repeat-y
 </style>

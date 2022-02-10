@@ -1,5 +1,5 @@
 <template>
-  <v-app light style="background-image: url('login_backgrounds.png')">
+  <v-app light style="background-image: url('login_backgrounds.png'); background-position: top center;">
     <FullPageLoader :loading="fullPageLoading" />
     <v-main>
       <v-container fluid class="pt-10">

@@ -3,7 +3,7 @@ import { config } from "dotenv";
 config();
 export default {
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
-  ssr: false,
+  ssr: true,
 
   // Target: https://go.nuxtjs.dev/config-target
   target: "static",
@@ -18,7 +18,9 @@ export default {
     primaryApiKey: process.env.PRIMARY_API_KEY || "",
     firebaseApiKey: process.env.FIREBASE_API_KEY || "",
     firebaseAuthDomain: process.env.FIREBASE_AUTH_DOMAIN || "",
-    loginButtonBackgroundBaseUrl: process.env.BUTTON_CDN_BASE_URL || "https://storage.googleapis.com/crewpass-development-loginbutton",
+    loginButtonBackgroundBaseUrl:
+      process.env.BUTTON_CDN_BASE_URL ||
+      "https://storage.googleapis.com/crewpass-development-loginbutton",
     version: process.env.VERSION || "mar2021",
   },
 
@@ -36,6 +38,16 @@ export default {
       { name: "format-detection", content: "telephone=no" },
     ],
     link: [
+      { rel: "preconnect", href: "https://fonts.googleapis.com" },
+      {
+        rel: "preconnect",
+        href: "https://fonts.gstatic.com",
+        crossOrigin: true,
+      },
+      {
+        rel: "stylesheet",
+        href: "https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap",
+      },
       { rel: "icon", type: "image/x-icon", href: "/favicon.ico" },
       {
         rel: "stylesheet",
@@ -71,6 +83,10 @@ export default {
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
   vuetify: {
     customVariables: ["~/assets/variables.scss"],
+    treeShake: true,
+    options: {
+      customProperties: true
+    },
     theme: {
       dark: false,
       themes: {
@@ -90,7 +106,7 @@ export default {
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},
   gtm: {
-    id: 'GTM-NCTGPKH',
-    enabled: true
-  }
+    id: "GTM-NCTGPKH",
+    enabled: true,
+  },
 };
