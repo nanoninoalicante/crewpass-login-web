@@ -92,7 +92,8 @@
               rounded
               large
               color="primary"
-              @click.stop="login"
+              target="_blank"
+              href="https://app.crewpass.co.uk/?utm_source=agency-verify-signup-web&utm_medium=web&utm_id=agency-verify-signup-button"
               >Sign up</v-btn
             >
           </v-col>
