@@ -11,17 +11,18 @@
           >
             <v-card-text>
               <v-row>
-                <v-col cols="12" class="py-10 my-8">
-                  <div>
-                    <div
-                      :class="['background-repeat']"
-                      :style="
-                        'background-image: url(' +
-                        loginButtonBackground +
-                        '); width: 330px; height: 41px;'
-                      "
-                    ></div>
-                  </div>
+                <v-col
+                  cols="12"
+                  class="py-10 my-8"
+                  justify="center"
+                  align="center"
+                >
+                  <div
+                    :class="['background-repeat', 'verification-status-badge']"
+                    :style="
+                      'background-image: url(' + loginButtonBackground + ');'
+                    "
+                  ></div>
                 </v-col>
               </v-row>
             </v-card-text>
@@ -236,8 +237,8 @@ export default {
       this.popupCallback();
     },
     getVerificationStatus() {
-      if(!this.crewStatus) return "Closed";
-      if(this.crewStatus === "Unchecked") {
+      if (!this.crewStatus) return "Closed";
+      if (this.crewStatus === "Unchecked") {
         return "Closed";
       }
       return this.crewStatus || "Closed";
@@ -310,9 +311,6 @@ export default {
           // ..
         });
     },
-    upgradeToPremium() {
-      console.log("upgrade to premium");
-    },
   },
 };
 </script>
@@ -323,4 +321,11 @@ export default {
   font-weight: 600
 .background-repeat
   background-repeat: repeat-y
+
+.verification-status-badge
+  background-position: center
+  background-size: cover
+  max-width: 340px
+  width: 100%
+  height: 40px
 </style>
