@@ -3,13 +3,17 @@
     <v-container fluid>
       <v-row>
         <v-col cols="12">
-          <v-card v-show="crewStatus" flat class="pa-5 ma-4 rounded-xl">
+          <!--          All users statues - except Free users -->
+          <v-card
+            v-show="crewStatus && crewStatus !== 'Unchecked'"
+            flat
+            class="pa-5 ma-4 rounded-xl"
+          >
             <v-card-text>
               <v-row>
                 <v-col cols="12" class="py-10 my-8">
-                  <div id="cp-login-wrapper">
+                  <div>
                     <div
-                      id="cp-login"
                       :class="['background-repeat']"
                       :style="
                         'background-image: url(' +
@@ -29,6 +33,51 @@
                 color="primary"
                 @click="closeWindow"
                 >Go back to Agency</v-btn
+              >
+            </v-card-actions>
+          </v-card>
+
+          <!-- FREE USER -->
+
+          <v-card
+            v-show="crewStatus && crewStatus === 'Unchecked'"
+            flat
+            class="pa-5 ma-4 rounded-xl"
+          >
+            <v-card-text>
+              <v-row>
+                <v-col cols="12" class="py-6">
+                  <h1 class="text-subtitle-1 font-weight-bold black--text">
+                    Sorry, your current CrewPass plan doesn't include this
+                    feature.
+                  </h1>
+                </v-col>
+
+                <v-col cols="12" class="py-6">
+                  <h1 class="text-subtitle-1 font-weight-bold black--text">
+                    Please upgrade your plan to use this feature with your
+                    agency, and get your background check.
+                  </h1>
+                </v-col>
+              </v-row>
+            </v-card-text>
+            <v-card-actions>
+              <v-btn
+                elevation="0"
+                rounded
+                large
+                color="gray"
+                @click="closeWindow"
+                >Go back to Agency</v-btn
+              >
+              <v-btn
+                elevation="0"
+                rounded
+                large
+                color="primary"
+                target="_blank"
+                :href="upgradeToPremiumUrl"
+                >Upgrade to Premium</v-btn
               >
             </v-card-actions>
           </v-card>
@@ -66,6 +115,8 @@
                       rounded
                       large
                       color="primary"
+                      :loading="fullPageLoading"
+                      :disabled="fullPageLoading"
                       @click.stop="login"
                       >Verify Now</v-btn
                     >
@@ -93,7 +144,7 @@
               large
               color="primary"
               target="_blank"
-              href="https://app.crewpass.co.uk/?utm_source=agency-verify-signup-web&utm_medium=web&utm_id=agency-verify-signup-button"
+              :href="signupLinkUrl"
               >Sign up</v-btn
             >
           </v-col>
@@ -110,7 +161,7 @@ import * as CryptoJS from "crypto-js";
 export default {
   components: {},
   metaInfo: {
-    title: "Login Demo",
+    title: "Crew Pass Agency Verification",
   },
   data() {
     return {
@@ -121,6 +172,10 @@ export default {
       qs: "",
       userId: "",
       popupPingInterval: "",
+      upgradeToPremiumUrl:
+        "https://app.crewpass.co.uk/auth/login?utm_source=agency-verify-signup-web&utm_medium=web&utm_id=crew-upgrade-to-premium-web",
+      signupLinkUrl:
+        "https://app.crewpass.co.uk/?utm_source=agency-verify-signup-web&utm_medium=web&utm_id=agency-verify-signup-button",
     };
   },
   computed: {
@@ -180,9 +235,16 @@ export default {
     beforeClose() {
       this.popupCallback();
     },
+    getVerificationStatus() {
+      if(!this.crewStatus) return "Closed";
+      if(this.crewStatus === "Unchecked") {
+        return "Closed";
+      }
+      return this.crewStatus || "Closed";
+    },
     popupCallback() {
       console.log("popupcallback");
-      const verificationStatus = this.crewStatus || "Closed";
+      const verificationStatus = this.getVerificationStatus();
       const payload = JSON.stringify({
         message: verificationStatus,
         status: verificationStatus.toLowerCase(),
@@ -247,6 +309,9 @@ export default {
           this.$store.commit("loading", false);
           // ..
         });
+    },
+    upgradeToPremium() {
+      console.log("upgrade to premium");
     },
   },
 };
