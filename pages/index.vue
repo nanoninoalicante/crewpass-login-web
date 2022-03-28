@@ -237,10 +237,6 @@ export default {
       this.popupCallback();
     },
     getVerificationStatus() {
-      if (!this.crewStatus) return "Closed";
-      if (this.crewStatus === "Unchecked") {
-        return "Closed";
-      }
       return this.crewStatus || "Closed";
     },
     popupCallback() {
