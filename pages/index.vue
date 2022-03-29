@@ -56,8 +56,9 @@
 
                 <v-col cols="12" class="py-6">
                   <h1 class="text-subtitle-1 font-weight-bold black--text">
-                    Please upgrade your plan to use this feature with your
-                    agency, and get your background check.
+                    You will need to undergo a criminal background check and
+                    identity verification to be able to share your CrewPass
+                    status with this agency.
                   </h1>
                 </v-col>
               </v-row>
@@ -78,7 +79,7 @@
                 color="primary"
                 target="_blank"
                 :href="upgradeToPremiumUrl"
-                >Upgrade to Premium</v-btn
+                >Apply now</v-btn
               >
             </v-card-actions>
           </v-card>
@@ -240,8 +241,8 @@ export default {
       return this.crewStatus || "Closed";
     },
     popupCallback() {
-      console.log("popupcallback");
       const verificationStatus = this.getVerificationStatus();
+      console.log("popupcallback: ", verificationStatus);
       const payload = JSON.stringify({
         message: verificationStatus,
         status: verificationStatus.toLowerCase(),
