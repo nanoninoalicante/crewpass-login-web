@@ -46,7 +46,8 @@ export default {
     state.userLastName = userData.lastName;
     state.userId = userData.userId;
     state.crewUniqueId = userData.crewUniqueId;
-    state.crewVerification = userData.checkStatus;
+    state.crewVerification = userData.kycUserStatus;
+    state.crewStatus = userData.kycUserStatus;
   },
   setDeviceData(state, deviceData) {
     if (!deviceData) {

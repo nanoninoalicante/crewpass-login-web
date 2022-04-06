@@ -287,14 +287,15 @@ export default {
           const token = await this.$firebase
             .auth()
             .currentUser.getIdToken(false);
-          await this.$store.dispatch("login", token).catch((e) => {
+          const userData = await this.$store.dispatch("login", token).catch((e) => {
             console.log("error from api login: ", e.message);
           });
+          console.log("userdata from login: ", userData);
           this.$gtm.push({
             event: "agency-verify-login",
             email: this.user.email,
             fullName: this.user.fullName,
-            status: this.user.checkStatus,
+            status: userData.kycUserStatus,
           });
           this.popupCallback();
         })
