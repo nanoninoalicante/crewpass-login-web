@@ -191,6 +191,8 @@ export default {
       "userFirstName",
       "userLastName",
       "crewUniqueId",
+      "crewHasSubscription",
+      "crewSubscriptionType"
     ]),
     loginButtonBackgroundBaseUrl() {
       return this.$config.loginButtonBackgroundBaseUrl;
@@ -246,12 +248,20 @@ export default {
       const payload = JSON.stringify({
         message: verificationStatus,
         status: verificationStatus.toLowerCase(),
-        subscriptionStatus: "subscribed",
+        subscriptionStatus: this.crewHasSubscription ? "subscribed" : "not-subscribed",
+        hasSubscription: this.crewHasSubscription,
         user: {
           email: this.userEmail,
           name: this.userFirstName + " " + this.userLastName,
           crewUniqueId: this.crewUniqueId,
+          hasSubscription: this.crewHasSubscription,
         },
+        formData: {
+          "crewpass-crew-status": verificationStatus,
+          "crewpass-crew-email": this.userEmail,
+          "crewpass-crew-crewUniqueId": this.crewUniqueId,
+          "crewpass-crew-name": this.userFirstName + " " + this.userLastName
+        }
       });
       if (window.opener) {
         console.log("window.opener.postMessage");

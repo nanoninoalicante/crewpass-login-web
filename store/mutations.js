@@ -48,6 +48,9 @@ export default {
     state.crewUniqueId = userData.crewUniqueId;
     state.crewVerification = userData.kycUserStatus;
     state.crewStatus = userData.kycUserStatus;
+    state.crewHasSubscription = !!userData.crewHasSubscription;
+    state.crewSubscriptionType = userData.subscriptionType;
+    state.userData = userData;
   },
   setDeviceData(state, deviceData) {
     if (!deviceData) {

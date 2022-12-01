@@ -43,4 +43,6 @@ export default {
   userLastName: (state) => state.userLastName || "",
   userId: (state) => state.userId || "",
   crewUniqueId: (state) => state.crewUniqueId || "",
+  crewSubscriptionType: (state) => state.crewSubscriptionType,
+  crewHasSubscription: (state) => state.crewHasSubscription,
 };
