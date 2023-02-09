@@ -210,6 +210,7 @@ export default {
   mounted() {
     // GET QUERY STRING DATA FROM URL
     this.qs = querystring.parse(window.location?.search);
+    this.setPartner();
     this.checkUser();
     // LISTEN FOR WINDOW CLOSE TO MAKE SURE A STATUS of "CLOSED" is returned
     window.addEventListener("beforeunload", this.beforeClose);
@@ -220,6 +221,10 @@ export default {
     }
   },
   methods: {
+    setPartner() {
+      if (!this.qs || !this.qs.partner) return null;
+      this.$store.commit("setAgency", this.qs.partner);
+    },
     test() {
       this.popupCallback();
     },
