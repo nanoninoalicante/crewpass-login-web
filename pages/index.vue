@@ -192,7 +192,7 @@ export default {
       "userLastName",
       "crewUniqueId",
       "crewHasSubscription",
-      "crewSubscriptionType"
+      "crewSubscriptionType",
     ]),
     loginButtonBackgroundBaseUrl() {
       return this.$config.loginButtonBackgroundBaseUrl;
@@ -248,7 +248,9 @@ export default {
       const payload = JSON.stringify({
         message: verificationStatus,
         status: verificationStatus.toLowerCase(),
-        subscriptionStatus: this.crewHasSubscription ? "subscribed" : "not-subscribed",
+        subscriptionStatus: this.crewHasSubscription
+          ? "subscribed"
+          : "not-subscribed",
         hasSubscription: this.crewHasSubscription,
         user: {
           email: this.userEmail,
@@ -260,8 +262,8 @@ export default {
           "crewpass-crew-status": verificationStatus,
           "crewpass-crew-email": this.userEmail,
           "crewpass-crew-crewUniqueId": this.crewUniqueId,
-          "crewpass-crew-name": this.userFirstName + " " + this.userLastName
-        }
+          "crewpass-crew-name": this.userFirstName + " " + this.userLastName,
+        },
       });
       if (window.opener) {
         console.log("window.opener.postMessage");
@@ -297,9 +299,11 @@ export default {
           const token = await this.$firebase
             .auth()
             .currentUser.getIdToken(false);
-          const userData = await this.$store.dispatch("login", token).catch((e) => {
-            console.log("error from api login: ", e.message);
-          });
+          const userData = await this.$store
+            .dispatch("login", token)
+            .catch((e) => {
+              console.log("error from api login: ", e.message);
+            });
           console.log("userdata from login: ", userData);
           this.$gtm.push({
             event: "agency-verify-login",

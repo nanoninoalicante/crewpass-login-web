@@ -1,5 +1,11 @@
 <template>
-  <v-app light style="background-image: url('login_backgrounds.png'); background-position: top center;">
+  <v-app
+    light
+    style="
+      background-image: url('login_backgrounds.png');
+      background-position: top center;
+    "
+  >
     <FullPageLoader :loading="fullPageLoading" />
     <v-main>
       <v-container fluid class="pt-10">
@@ -74,7 +80,8 @@ export default {
         // User is signed in, see docs for a list of available properties
         // https://firebase.google.com/docs/reference/js/firebase.User
         user.getIdTokenResult(true).then((u) => {
-          console.log("token: ", u.token);
+          console.log("token: ", u);
+          console.log("user: ", user);
         });
         // ...
       });
