@@ -304,6 +304,7 @@ export default {
             .catch((e) => {
               console.log("error from api login: ", e.message);
             });
+          await this.$store.dispatch("recordVerification", token);
           console.log("userdata from login: ", userData);
           this.$gtm.push({
             event: "agency-verify-login",
