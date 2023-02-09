@@ -19,5 +19,6 @@ export default () => ({
   crewVerification: "",
   userData: "",
   crewHasSubscription: false,
-  crewSubscriptionType: ""
+  crewSubscriptionType: "",
+  agency: ""
 });

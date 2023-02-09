@@ -34,15 +34,19 @@ export default {
         buttonText: "Unchecked",
       },
     };
-    if(!state.crewVerification) return "";
+    if (!state.crewVerification) return "";
     return statuses[state.crewVerification]?.buttonText || "Pending";
   },
   crewStatusDisplay: (state) => (state.crewStatus || null),
   userEmail: (state) => state.userEmail || "",
   userFirstName: (state) => state.userFirstName || "",
   userLastName: (state) => state.userLastName || "",
+  userFullName: (state) => state.userFirstName + " " + state.userLastName,
   userId: (state) => state.userId || "",
   crewUniqueId: (state) => state.crewUniqueId || "",
   crewSubscriptionType: (state) => state.crewSubscriptionType,
   crewHasSubscription: (state) => state.crewHasSubscription,
+  crewUserData: (state) => state.userData,
+  crewStatusLowerCase: (state) => state.crewVerification ? state.crewVerification.toLowerCase() : "",
+  agency: (state) => state.agency,
 };

@@ -54,7 +54,6 @@ export default {
     ...mapGetters(["getAlerts", "fullPageLoading", "commitId", "branchId"]),
   },
   mounted() {
-    this.checkUser();
     this.startSession().then((r) => {
       console.log("session started");
     });

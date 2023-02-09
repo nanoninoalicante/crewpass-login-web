@@ -116,4 +116,26 @@ export default {
       })
       .then(r => r);
   },
+  async recordVerification({ getters, dispatch, commit }, token) {
+    const uri = "/record-verification";
+    const crewUniqueId = getters("crewUniqueId");
+    const crewFullName = getters("userFullName");
+    const crewStatusLowerCase = getters("crewStatusLowerCase");
+    const crewUserData = getters("crewUserData");
+    const agency = getters("agency");
+    const payload = {
+      agency,
+      crewUniqueId,
+      crewStatus: crewStatusLowerCase,
+      crewFullName,
+      crewUserData
+    };
+    this.$crewVerifyApi.setHeader("Authorization", token);
+    return await this.$crewVerifyApi
+      .post(uri, JSON.stringify(payload))
+      .then((r) => {
+        return r;
+      })
+      .then(r => r);
+  },
 };

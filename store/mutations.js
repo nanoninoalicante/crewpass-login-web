@@ -39,6 +39,9 @@ export default {
   setCrewStatus(state, crewStatus) {
     state.crewStatus = crewStatus;
   },
+  setAgency(state, agency) {
+    state.agency = agency;
+  },
   setUserData(state, userData) {
     console.log("set user data: ", userData);
     state.userEmail = userData.email;
