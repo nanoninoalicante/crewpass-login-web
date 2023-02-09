@@ -9,4 +9,9 @@ export default function ({ $axios, $config }, inject) {
   demoApi.setBaseURL("https://webhook.site/0bb20ab5-6e6c-4943-870f-9acdcad6684d");
   demoApi.setHeader("Content-Type", "application/json");
   inject("demoApi", demoApi);
+
+  const crewVerifyApi = $axios.create();
+  crewVerifyApi.setBaseURL($config.crewVerifyApiBaseUrl);
+  crewVerifyApi.setHeader("Content-Type", "application/json");
+  inject("crewVerifyApi", crewVerifyApi);
 }

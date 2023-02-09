@@ -39,6 +39,9 @@ export default {
   setCrewStatus(state, crewStatus) {
     state.crewStatus = crewStatus;
   },
+  setAgency(state, agency) {
+    state.agency = agency;
+  },
   setUserData(state, userData) {
     console.log("set user data: ", userData);
     state.userEmail = userData.email;
@@ -48,6 +51,9 @@ export default {
     state.crewUniqueId = userData.crewUniqueId;
     state.crewVerification = userData.kycUserStatus;
     state.crewStatus = userData.kycUserStatus;
+    state.crewHasSubscription = !!userData.crewHasSubscription;
+    state.crewSubscriptionType = userData.subscriptionType;
+    state.userData = userData;
   },
   setDeviceData(state, deviceData) {
     if (!deviceData) {

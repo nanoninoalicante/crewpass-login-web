@@ -191,6 +191,8 @@ export default {
       "userFirstName",
       "userLastName",
       "crewUniqueId",
+      "crewHasSubscription",
+      "crewSubscriptionType",
     ]),
     loginButtonBackgroundBaseUrl() {
       return this.$config.loginButtonBackgroundBaseUrl;
@@ -208,6 +210,7 @@ export default {
   mounted() {
     // GET QUERY STRING DATA FROM URL
     this.qs = querystring.parse(window.location?.search);
+    this.setPartner();
     this.checkUser();
     // LISTEN FOR WINDOW CLOSE TO MAKE SURE A STATUS of "CLOSED" is returned
     window.addEventListener("beforeunload", this.beforeClose);
@@ -218,6 +221,10 @@ export default {
     }
   },
   methods: {
+    setPartner() {
+      if (!this.qs || !this.qs.partner) return null;
+      this.$store.commit("setAgency", this.qs.partner);
+    },
     test() {
       this.popupCallback();
     },
@@ -246,11 +253,21 @@ export default {
       const payload = JSON.stringify({
         message: verificationStatus,
         status: verificationStatus.toLowerCase(),
-        subscriptionStatus: "subscribed",
+        subscriptionStatus: this.crewHasSubscription
+          ? "subscribed"
+          : "not-subscribed",
+        hasSubscription: this.crewHasSubscription,
         user: {
           email: this.userEmail,
           name: this.userFirstName + " " + this.userLastName,
           crewUniqueId: this.crewUniqueId,
+          hasSubscription: this.crewHasSubscription,
+        },
+        formData: {
+          "crewpass-crew-status": verificationStatus,
+          "crewpass-crew-email": this.userEmail,
+          "crewpass-crew-crewUniqueId": this.crewUniqueId,
+          "crewpass-crew-name": this.userFirstName + " " + this.userLastName,
         },
       });
       if (window.opener) {
@@ -287,9 +304,12 @@ export default {
           const token = await this.$firebase
             .auth()
             .currentUser.getIdToken(false);
-          const userData = await this.$store.dispatch("login", token).catch((e) => {
-            console.log("error from api login: ", e.message);
-          });
+          const userData = await this.$store
+            .dispatch("login", token)
+            .catch((e) => {
+              console.log("error from api login: ", e.message);
+            });
+          await this.$store.dispatch("recordVerification", token);
           console.log("userdata from login: ", userData);
           this.$gtm.push({
             event: "agency-verify-login",

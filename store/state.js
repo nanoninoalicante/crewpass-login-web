@@ -16,5 +16,9 @@ export default () => ({
   userLastName: "",
   userId: "",
   crewUniqueId: "",
-  crewVerification: ""
+  crewVerification: "",
+  userData: "",
+  crewHasSubscription: false,
+  crewSubscriptionType: "",
+  agency: ""
 });
