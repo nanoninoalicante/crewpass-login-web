@@ -11,7 +11,7 @@ export default function ({ $axios, $config }, inject) {
   inject("demoApi", demoApi);
 
   const crewVerifyApi = $axios.create();
-  crewVerifyApi.setBaseURL("https://crewpass-crewverify-api-dev-feb2023-eu-ojo6h3z4mq-ez.a.run.app");
+  crewVerifyApi.setBaseURL($config.crewVerifyApiBaseUrl);
   crewVerifyApi.setHeader("Content-Type", "application/json");
   inject("crewVerifyApi", crewVerifyApi);
 }
